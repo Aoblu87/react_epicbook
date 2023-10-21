@@ -5,7 +5,7 @@ import Logo from './assets/logo_books.png';
 
 function MyNav() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary fixed-top">
       <Container>
 
       <Navbar.Brand href="#home">

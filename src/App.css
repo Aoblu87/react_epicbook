@@ -1,0 +1,8 @@
+#logo-cookies{
+    width: 2rem;
+}
+
+#card-img{
+    aspect-ratio: 1;
+    object-fit: contain;
+}
