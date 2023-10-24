@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AllTheBooks from './AllTheBooks';
 import './App.css';
+import MyFooter from './MyFooter';
 import MyNav from './MyNav';
 import Welcome from './Welcome';
-import AllTheBooks from './AllTheBooks';
-import MyFooter from './MyFooter';
 
 
 
@@ -16,9 +16,12 @@ function App() {
     <>
       <MyNav />
       <Welcome />
-      <AllTheBooks/>
-      <MyFooter/>
-   
+      <AllTheBooks
+      />
+
+
+      <MyFooter />
+
 
 
 
