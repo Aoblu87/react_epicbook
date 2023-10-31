@@ -1,8 +1,8 @@
 import { Container, Row } from "react-bootstrap";
-import SingleBook from "./SingleBook";
 import dataBooks from "../assets/JSON/fantasy.json";
+import SingleBook from "./SingleBook";
 
-export default function AllTheBooks({ query, setQuery }) {
+export default function AllTheBooks({ query }) {
   const searchResult = (book) =>
     book.title.toLowerCase().includes(query.toLowerCase());
 
