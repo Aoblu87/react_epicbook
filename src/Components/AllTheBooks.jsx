@@ -1,6 +1,6 @@
 import { Container, Row } from "react-bootstrap";
 import SingleBook from "./SingleBook";
-import dataBooks from "./assets/JSON/fantasy.json";
+import dataBooks from "../assets/JSON/fantasy.json";
 
 export default function AllTheBooks({ query, setQuery }) {
   const searchResult = (book) =>

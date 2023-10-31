@@ -2,12 +2,20 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Logo from "./assets/logo_books.png";
+import Logo from "../assets/logo_books.png";
+import ThemeContext from "../contexts/theme";
+import { useContext } from "react";
 
 function MyNav({ query, setQuery }) {
+  const { theme, setTheme } = useContext(ThemeContext);
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary fixed-top" xs={12} md={6}>
+      <Navbar
+        expand="lg"
+        className={theme === "light" ? "bg-light" : "bg-dark "}
+        variant={theme}
+        xs={12}
+      >
         <Container className="justify-content-center">
           <Row
             xs={3}
@@ -50,6 +58,11 @@ function MyNav({ query, setQuery }) {
               </Button>
             </Col>
           </Row>
+          <button
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          >
+            {theme}
+          </button>
         </Container>
       </Navbar>
     </>
