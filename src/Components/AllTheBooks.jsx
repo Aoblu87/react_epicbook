@@ -10,7 +10,7 @@ export default function AllTheBooks({ query }) {
     <Container className="my-5">
       <Row xs={1} md={4} className="g-4">
         {dataBooks.filter(searchResult).map((book) => (
-          <SingleBook oneBook={book} key={book.asin} />
+          <SingleBook oneBook={book} asin={book.asin} key={book.asin} />
         ))}
       </Row>
     </Container>

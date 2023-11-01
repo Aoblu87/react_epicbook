@@ -2,22 +2,39 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 export default function AddComment({ asin }) {
+  // const [loading, setLoading] = useState(true);
   const [rate, setRate] = useState(false);
   const [comment, setComment] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const formData = {
+      comment,
+      rate,
+      elementId: asin,
+    };
+    console.log(formData);
+
+    fetch("https://striveschool-api.herokuapp.com/api/comments/", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQyNTJkNTJjMWRlOTAwMTQ1NjM3MTUiLCJpYXQiOjE2OTg4NDUzOTcsImV4cCI6MTcwMDA1NDk5N30.pbpjH7j3zUKHJVynzwOMsZlvuuxiKLLuVaukS0n5rCE",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(formData),
+    })
+      .then(function (response) {
+        if (response.ok) {
+          alert("Saved!");
+        } else {
+          alert("Something went wrong!");
+        }
+      })
+      .catch((e) => console.error(e));
   };
 
-  const formData = {
-    comment,
-    rate,
-    elementId: { asin },
-  };
-
-  console.log(comment);
-  console.log(rate);
-  console.log(formData);
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">

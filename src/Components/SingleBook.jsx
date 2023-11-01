@@ -2,14 +2,14 @@ import { Card } from "react-bootstrap";
 import { useState } from "react";
 import CommentArea from "./CommentArea";
 
-export default function SingleBook({ oneBook }) {
+export default function SingleBook({ oneBook, asin }) {
   const [selected, setSelected] = useState(false);
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
 
   return (
-    <Card id={oneBook.asin} className="border border-0">
+    <Card key={asin} className="border border-0">
       <Card.Img
         id="card-img"
         variant="top"
@@ -27,7 +27,7 @@ export default function SingleBook({ oneBook }) {
       <Card.Body className="my-2">
         <Card.Title className="text-center my-2">{oneBook.title}</Card.Title>
       </Card.Body>
-      <CommentArea setShow={setShow} show={show} id={oneBook.asin} />
+      <CommentArea setShow={setShow} show={show} asin={asin} />
     </Card>
   );
 }
