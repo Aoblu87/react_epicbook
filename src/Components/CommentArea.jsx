@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
+import { ListGroup } from "react-bootstrap";
 
 export default function CommentArea({ show, setShow, asin }) {
   const handleClose = () => setShow(false);
@@ -14,7 +15,9 @@ export default function CommentArea({ show, setShow, asin }) {
         </Modal.Header>
         <Modal.Body>
           <AddComment asin={asin} />
-          <CommentList asin={asin} />
+          <ListGroup as="ol" numbered>
+            <CommentList asin={asin} />
+          </ListGroup>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
