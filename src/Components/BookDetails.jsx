@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 
-export default function SingleBook({
+export default function BookDetails({
   book,
 
   setSelectedId,

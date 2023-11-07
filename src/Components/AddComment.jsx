@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-export default function AddComment({ asin }) {
+export default function AddComment({ selectedId }) {
   // const [loading, setLoading] = useState(true);
   const [rate, setRate] = useState(false);
   const [comment, setComment] = useState("");
@@ -12,7 +12,7 @@ export default function AddComment({ asin }) {
     const formData = {
       comment,
       rate,
-      elementId: asin,
+      elementId: selectedId,
     };
     console.log(formData);
 
@@ -38,7 +38,6 @@ export default function AddComment({ asin }) {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Scrivi una recensione</Form.Label>
         <Form.Control
           placeholder="Romanzo avvincente..."
           as="textarea"

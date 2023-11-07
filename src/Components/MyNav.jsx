@@ -1,10 +1,10 @@
+import { useContext } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../assets/logo_books.png";
 import ThemeContext from "../contexts/theme";
-import { useContext } from "react";
 
 function MyNav({ query, setQuery }) {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -22,7 +22,7 @@ function MyNav({ query, setQuery }) {
             className="justify-content-between p-2"
             style={{ width: "100%" }}
           >
-            <Navbar.Brand href="#home" className="d-flex">
+            <Navbar.Brand className="d-flex">
               <img
                 src={Logo}
                 width="30"
@@ -31,6 +31,7 @@ function MyNav({ query, setQuery }) {
                 alt="logo"
               />
             </Navbar.Brand>
+
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
               className="d-flex"
@@ -38,7 +39,6 @@ function MyNav({ query, setQuery }) {
             />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="#">Home</Nav.Link>
                 <Nav.Link href="#">About</Nav.Link>
                 <Nav.Link href="#">Browse</Nav.Link>
               </Nav>
