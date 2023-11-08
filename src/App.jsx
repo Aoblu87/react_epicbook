@@ -7,6 +7,7 @@ import MyFooter from "./Components/MyFooter";
 import MyNav from "./Components/MyNav";
 import Welcome from "./Components/Welcome";
 import ThemeContext from "./contexts/theme";
+import BookDetails from "./Components/BookDetails";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -26,6 +27,7 @@ function App() {
                 path="/"
                 element={<AllTheBooks query={query} setQuery={setQuery} />}
               />
+              <Route path="/BookDetails/:id" element={<BookDetails />} />
             </Routes>
           </BrowserRouter>
         </div>

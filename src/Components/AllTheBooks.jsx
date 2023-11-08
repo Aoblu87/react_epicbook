@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import dataBooks from "../assets/JSON/fantasy.json";
-import CommentArea from "./CommentArea";
 import SingleBook from "./SingleBook";
 
 export default function AllTheBooks({ query }) {
@@ -30,9 +29,9 @@ export default function AllTheBooks({ query }) {
           />
         ))}
       </Row>
-      {selectedId && (
+      {/* {selectedId && (
         <CommentArea selectedId={selectedId} bookTitle={bookTitle} />
-      )}
+      )} */}
     </Container>
   );
 }

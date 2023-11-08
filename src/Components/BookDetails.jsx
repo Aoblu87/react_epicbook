@@ -1,24 +1,25 @@
-import { Card } from "react-bootstrap";
+import { Card, Container, Row } from "react-bootstrap";
+import CommentArea from "./CommentArea";
 
 export default function BookDetails({
   book,
 
-  setSelectedId,
-  setBookTitle,
+  selectedId,
 }) {
+  const { id } = useParams();
   return (
-    <Card key={book.asin} className="border border-0">
-      <Card.Img
-        variant="top"
-        src={book.img}
-        onClick={() => {
-          setSelectedId(book.asin);
-          setBookTitle(book.title);
-        }}
-      />
-      <Card.Body className="my-2">
-        <Card.Title className="text-center my-2">{book.title}</Card.Title>
-      </Card.Body>
-    </Card>
+    <Container>
+      <Row>
+        <Card key={book.selectedId} className="border border-0">
+          <Card.Img variant="top" src={book.img} />
+          <Card.Body className="my-2">
+            <Card.Title className="text-center my-2">{book.title}</Card.Title>
+          </Card.Body>
+        </Card>
+      </Row>
+      <Row>
+        <CommentArea selectedId={selectedId} />
+      </Row>
+    </Container>
   );
 }
