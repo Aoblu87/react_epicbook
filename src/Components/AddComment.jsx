@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-export default function AddComment({ selectedId }) {
+export default function AddComment({ id }) {
   // const [loading, setLoading] = useState(true);
   const [rate, setRate] = useState(false);
   const [comment, setComment] = useState("");
@@ -12,7 +12,7 @@ export default function AddComment({ selectedId }) {
     const formData = {
       comment,
       rate,
-      elementId: selectedId,
+      elementId: id,
     };
     console.log(formData);
 

@@ -55,6 +55,9 @@ export default function BookDetails() {
           </Col>
         </Card>
       </Row>
+      <Row>
+        <CommentArea id={book.asin} />
+      </Row>
     </Container>
   );
 }
