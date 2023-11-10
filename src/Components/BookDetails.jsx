@@ -1,24 +1,59 @@
-import { Card, Container, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Image,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import dataBooks from "../assets/JSON/fantasy.json";
 import CommentArea from "./CommentArea";
 
-export default function BookDetails({
-  book,
-
-  selectedId,
-}) {
+export default function BookDetails() {
   const { id } = useParams();
+  console.log("Received id:", id);
+
+  const book = dataBooks.find((book) => book.asin === id);
+  console.log(book);
+  if (!book) {
+    return <div>Product not found</div>;
+  }
+
   return (
     <Container>
-      <Row>
-        <Card key={book.selectedId} className="border border-0">
-          <Card.Img variant="top" src={book.img} />
-          <Card.Body className="my-2">
-            <Card.Title className="text-center my-2">{book.title}</Card.Title>
-          </Card.Body>
+      <Row className="g-0">
+        <Card className="d-flex flex-row justify-content-center border border-0">
+          <Col md={4} className="d-flex mx-3">
+            <Image src={book.img} className="card-img-top" alt={book.title} />
+          </Col>
+          <Col md={8} className="d-flex flex-column">
+            <CardBody>
+              <h5 className="card-title">{book.title}</h5>
+              <p className="card-text">Genre: {book.category}</p>
+              <p className="card-text">Price: {book.price}€</p>
+
+              <p className="card-text">
+                Description: Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua.
+              </p>
+            </CardBody>
+            <ListGroup className="list-group list-group-flush">
+              <ListGroupItem>ISBN: {book.asin}</ListGroupItem>
+              <ListGroupItem>
+                PubListGroupItemshed: January 1, 2023
+              </ListGroupItem>
+              <ListGroupItem>Pages: 200</ListGroupItem>
+            </ListGroup>
+            <CardBody>
+              <Button className="btn btn-primary">Buy Now</Button>
+            </CardBody>
+          </Col>
         </Card>
-      </Row>
-      <Row>
-        <CommentArea selectedId={selectedId} />
       </Row>
     </Container>
   );

@@ -2,12 +2,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import AllTheBooks from "./Components/AllTheBooks";
-import MyFooter from "./Components/MyFooter";
-import MyNav from "./Components/MyNav";
-import Welcome from "./Components/Welcome";
+import AllTheBooks from "./components/AllTheBooks";
+import MyFooter from "./components/MyFooter";
+import MyNav from "./components/MyNav";
+import Welcome from "./components/Welcome";
 import ThemeContext from "./contexts/theme";
-import BookDetails from "./Components/BookDetails";
+import BookDetails from "./components/BookDetails";
+import AlertDismissible from "./components/AlertDismissible";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -15,23 +16,27 @@ function App() {
 
   return (
     <>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        <div className={`${theme} App`}>
-          <BrowserRouter>
+      <BrowserRouter>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
+          <div className={`${theme} App`}>
             <MyNav query={query} setQuery={setQuery} />
-            <Welcome />
-            <AllTheBooks query={query} setQuery={setQuery} />
-            <MyFooter />
             <Routes>
               <Route
                 path="/"
-                element={<AllTheBooks query={query} setQuery={setQuery} />}
+                element={
+                  <>
+                    <AlertDismissible />
+                    <Welcome />
+                    <AllTheBooks query={query} setQuery={setQuery} />
+                  </>
+                }
               />
               <Route path="/BookDetails/:id" element={<BookDetails />} />
             </Routes>
-          </BrowserRouter>
-        </div>
-      </ThemeContext.Provider>
+            <MyFooter />
+          </div>
+        </ThemeContext.Provider>
+      </BrowserRouter>
     </>
   );
 }

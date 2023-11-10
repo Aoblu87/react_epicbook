@@ -1,8 +1,8 @@
-import { Card, CardSubtitle, ListGroup } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
 
-export default function CommentArea({ selectedId, bookTitle }) {
+export default function CommentArea({ id }) {
   return (
     <>
       <Card id="comment-area">
@@ -23,10 +23,10 @@ export default function CommentArea({ selectedId, bookTitle }) {
             </Link>
           </div> */}
           <Card.Title>Lascia una recensione</Card.Title>
-          <CardSubtitle className="mb-2 text-danger">{bookTitle}</CardSubtitle>
-          <AddComment selectedId={selectedId} />
+
+          <AddComment id={id} />
           <ListGroup as="ol" numbered>
-            <CommentList selectedId={selectedId} />
+            <CommentList id={id} />
           </ListGroup>
         </Card.Body>
       </Card>

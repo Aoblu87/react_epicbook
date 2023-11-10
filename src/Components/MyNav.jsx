@@ -5,24 +5,22 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../assets/logo_books.png";
 import ThemeContext from "../contexts/theme";
+import { MoonStarsFill, Sun, SunFill } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 function MyNav({ query, setQuery }) {
   const { theme, setTheme } = useContext(ThemeContext);
+
   return (
     <>
       <Navbar
         expand="lg"
-        className={theme === "light" ? "bg-light" : "bg-dark "}
+        className={`theme === "light" ? "bg-light" : "bg-dark " mb-5`}
         variant={theme}
-        xs={12}
       >
-        <Container className="justify-content-center">
-          <Row
-            xs={3}
-            className="justify-content-between p-2"
-            style={{ width: "100%" }}
-          >
-            <Navbar.Brand className="d-flex">
+        <Container fluid className="mx-3">
+          <Link to="/">
+            <Navbar.Brand>
               <img
                 src={Logo}
                 width="30"
@@ -31,37 +29,37 @@ function MyNav({ query, setQuery }) {
                 alt="logo"
               />
             </Navbar.Brand>
+          </Link>
 
-            <Navbar.Toggle
-              aria-controls="basic-navbar-nav"
-              className="d-flex"
-              style={{ width: "15%" }}
-            />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="#">About</Nav.Link>
-                <Nav.Link href="#">Browse</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Row>
-          <Row className="justify-content-center my-2" xs={2}>
-            <Col className="d-flex justify-content-center" xs={11}>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="#">About</Nav.Link>
+              <Nav.Link href="#">Browse</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+
+          <Row className="justify-content-center my-2 mx-5">
+            <Col xs={11}>
               <Form.Control
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
             </Col>
-            <Col className="d-flex justify-content-center" xs={1}>
+            <Col xs={1} className="d-flex justify-content-center">
               <Button variant="dark">
                 <i className="bi bi-search"></i>
               </Button>
             </Col>
           </Row>
+
           <button
+            className="btn btn-light rounded-circle"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           >
-            {theme}
+            {theme === "light" ? <MoonStarsFill /> : <Sun />}
           </button>
         </Container>
       </Navbar>
