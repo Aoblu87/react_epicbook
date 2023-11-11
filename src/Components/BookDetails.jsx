@@ -18,7 +18,7 @@ export default function BookDetails() {
   console.log("Received id:", id);
 
   const book = dataBooks.find((book) => book.asin === id);
-  console.log(book);
+
   if (!book) {
     return <div>Product not found</div>;
   }

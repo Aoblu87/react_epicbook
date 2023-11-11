@@ -3,12 +3,13 @@ import AddComment from "./AddComment";
 import CommentList from "./CommentList";
 
 export default function CommentArea({ id }) {
-  console.log(id);
   return (
     <>
-      <Card id="comment-area">
+      <Card id="comment-area" className="my-5">
         <Card.Body>
-          <Card.Title>Lascia una recensione</Card.Title>
+          <Card.Title className="d-flex justify-content-center">
+            Lascia una recensione
+          </Card.Title>
 
           <AddComment id={id} />
           <ListGroup as="ol" numbered>

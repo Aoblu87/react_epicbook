@@ -5,15 +5,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { Bearer } from "../Bearer";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function AddComment({ id }) {
+export default function EditComment({ id, asin, description, value }) {
   // const [loading, setLoading] = useState(true);
-  const [rate, setRate] = useState(false);
-  const [comment, setComment] = useState("");
+  const [rate, setRate] = useState(true);
+  const [comment, setComment] = useState(value);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleEdit = (id) => {
     const formData = {
       comment,
       rate,
@@ -21,12 +19,12 @@ export default function AddComment({ id }) {
     };
     console.log(formData);
 
-    fetch("https://striveschool-api.herokuapp.com/api/comments/", {
+    fetch(`https://striveschool-api.herokuapp.com/api/comments/${id}`, {
       headers: {
         Authorization: Bearer,
         "Content-Type": "application/json",
       },
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(formData),
     })
       .then(function (response) {
@@ -43,23 +41,22 @@ export default function AddComment({ id }) {
       })
       .catch((e) => console.error(e));
   };
-
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleEdit}>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Control
           placeholder="Romanzo avvincente..."
           as="textarea"
           rows={3}
           type="text"
-          value={comment}
+          value={description}
           onChange={(e) => setComment(e.target.value)}
         />
       </Form.Group>
       <Form.Label>Come valuteresti il libro?</Form.Label>
       <Form.Select
         aria-label="Default select example"
-        value={rate}
+        value={value}
         onChange={(e) => setRate(e.target.value)}
       >
         <option>Valutazione...</option>

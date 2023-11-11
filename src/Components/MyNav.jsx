@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { MoonStarsFill, Sun } from "react-bootstrap-icons";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 import Logo from "../assets/logo_books.png";
 import ThemeContext from "../contexts/theme";
-import { MoonStarsFill, Sun, SunFill } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
 
 function MyNav({ query, setQuery }) {
   const { theme, setTheme } = useContext(ThemeContext);

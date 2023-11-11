@@ -2,13 +2,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
+import AlertDismissible from "./components/AlertDismissible";
 import AllTheBooks from "./components/AllTheBooks";
+import BookDetails from "./components/BookDetails";
 import MyFooter from "./components/MyFooter";
 import MyNav from "./components/MyNav";
 import Welcome from "./components/Welcome";
 import ThemeContext from "./contexts/theme";
-import BookDetails from "./components/BookDetails";
-import AlertDismissible from "./components/AlertDismissible";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -32,6 +32,7 @@ function App() {
                 }
               />
               <Route path="/BookDetails/:id" element={<BookDetails />} />
+              <Route path="/EditComment/:id, :asin" element={<BookDetails />} />
             </Routes>
             <MyFooter />
           </div>
