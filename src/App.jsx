@@ -32,7 +32,6 @@ function App() {
                 }
               />
               <Route path="/BookDetails/:id" element={<BookDetails />} />
-              <Route path="/EditComment/:id, :asin" element={<BookDetails />} />
             </Routes>
             <MyFooter />
           </div>

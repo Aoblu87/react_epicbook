@@ -1,8 +1,10 @@
 import { Card, ListGroup } from "react-bootstrap";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
+import { useState } from "react";
 
 export default function CommentArea({ id }) {
+  const [comments, setComments] = useState([]);
   return (
     <>
       <Card id="comment-area" className="my-5">
@@ -11,9 +13,13 @@ export default function CommentArea({ id }) {
             Lascia una recensione
           </Card.Title>
 
-          <AddComment id={id} />
+          <AddComment id={id} comments={comments} setComments={setComments} />
           <ListGroup as="ol" numbered>
-            <CommentList id={id} />
+            <CommentList
+              id={id}
+              comments={comments}
+              setComments={setComments}
+            />
           </ListGroup>
         </Card.Body>
       </Card>

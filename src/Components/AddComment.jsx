@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { Bearer } from "../Bearer";
 import "react-toastify/dist/ReactToastify.css";
+import { Bearer } from "../Bearer";
 
-export default function AddComment({ id }) {
-  // const [loading, setLoading] = useState(true);
+export default function AddComment({ id, comments, setComments }) {
   const [rate, setRate] = useState(false);
   const [comment, setComment] = useState("");
-  const navigate = useNavigate();
+
+  const getComments = () => {
+    fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
+      .then((r) => r.json())
+      .then(setComments);
+  };
+  useEffect(() => {
+    getComments();
+  }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,13 +40,17 @@ export default function AddComment({ id }) {
           toast.success("Comment saved successfully!", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
-          navigate(`/BookDetails/${id}`);
         } else {
           toast.error("Something went wrong!", {
             position: toast.POSITION.TOP_LEFT,
           });
         }
+        return fetch(
+          `https://striveschool-api.herokuapp.com/api/books/${id}/comments/`
+        );
       })
+      .then((r) => r.json())
+      .then(getComments)
       .catch((e) => console.error(e));
   };
 

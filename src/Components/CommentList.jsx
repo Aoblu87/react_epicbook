@@ -1,74 +1,60 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Row, Spinner } from "react-bootstrap";
+import { Button, Col, ListGroup, Row, Spinner } from "react-bootstrap";
 import { PencilFill, Trash3Fill } from "react-bootstrap-icons";
-import ListGroup from "react-bootstrap/ListGroup";
-import { Bearer } from "../Bearer";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { Bearer } from "../Bearer";
 
-export default function CommentList({ id }) {
+export default function CommentList({ id, comments, setComments }) {
   const [loading, setLoading] = useState(true);
-  const [comments, setComments] = useState([]);
-  const navigate = useNavigate();
 
-  // Fetch GET
+  const getComments = () => {
+    fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
+      .then((r) => r.json())
+      .then(setComments)
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  console.log(comments);
+
   useEffect(() => {
-    fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`, {
-      headers: {
-        Authorization: Bearer,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((r) => {
-        if (!r.ok) {
-          throw new Error(`HTTP error! Status: ${r.status}`);
-        }
-        return r.json();
-      })
-      .then((data) => {
-        console.log("API response:", data);
-        setComments(data);
-      })
-      .finally(() => setLoading(false))
-      .catch((error) => console.error("Error fetching comments:", error));
+    getComments();
   }, [id]);
 
   // Fetch DELETE
-
-  const handleDelete = (id, asin) => {
-    fetch(`https://striveschool-api.herokuapp.com/api/comments/${id}`, {
+  const handleDelete = (id) => {
+    fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
+      method: "DELETE",
       headers: {
         Authorization: Bearer,
       },
-      method: "DELETE",
     })
       .then((r) => {
         if (r.ok) {
           toast.success("Deleted successfully!", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
-          navigate(`/BookDetails/${asin}`);
         } else {
           toast.error("Something went wrong!", {
             position: toast.POSITION.TOP_LEFT,
           });
         }
-        return r.json();
+        return fetch(
+          `https://striveschool-api.herokuapp.com/api/books/${id}/comments/`
+        );
       })
-      .then(setComments)
-      .catch((e) => console.error("Error deleting comment:", e));
-  };
-
-  const handleEdit = (id, asin, description, value) => {
-    navigate(`/EditComment/${id}, ${asin}, ${description}, ${value}`);
+      .then((r) => r.json())
+      .then(getComments)
+      .catch((e) => console.error(e));
   };
 
   return loading ? (
     <Spinner />
   ) : (
-    comments.map((comment, key) => (
-      <ListGroup.Item as="li" key={key}>
+    comments.map((comment) => (
+      <ListGroup.Item as="li" key={comment._id}>
         <Row className="justify-content-between">
           <Col md={8}>
             <h3>Recensione</h3>
@@ -78,12 +64,12 @@ export default function CommentList({ id }) {
             <Button
               variant="warning"
               className="me-2"
-              onClick={handleEdit(
-                comment.id,
-                comment.elementId,
-                comment.comment,
-                comment.rate
-              )}
+              // onClick={handleEdit(
+              //   comment.id,
+              //   comment.elementId,
+              //   comment.comment,
+              //   comment.rate
+              // )}
             >
               {" "}
               <PencilFill />{" "}
@@ -92,7 +78,7 @@ export default function CommentList({ id }) {
               variant="danger"
               className="me-1"
               onClick={() => {
-                handleDelete(comment._id, comment.elementId);
+                handleDelete(comment._id);
               }}
             >
               {" "}
