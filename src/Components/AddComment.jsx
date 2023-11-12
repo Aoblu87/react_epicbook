@@ -12,7 +12,14 @@ export default function AddComment({ id, comments, setComments }) {
       .then((r) => r.json())
       .then(setComments);
   };
+<<<<<<< Updated upstream
   const getCommentsByBook = useCallback(getComments, [getComments]);
+=======
+  useEffect(() => {
+    getComments();
+  }, [id]);
+  //Dovrei aggiungere la dipendeza [getComments], ma se uso la UseCallBack poi non riesco a visualizzare i dati al render del componente e non trovo soluzione.
+>>>>>>> Stashed changes
 
   const handleSubmit = (e) => {
     e.preventDefault();

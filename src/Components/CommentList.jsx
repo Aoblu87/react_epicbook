@@ -4,6 +4,7 @@ import { PencilFill, Trash3Fill } from "react-bootstrap-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
+import EditComment from "./EditComment";
 
 export default function CommentList({ id, comments, setComments }) {
   const [loading, setLoading] = useState(true);
@@ -96,42 +97,16 @@ export default function CommentList({ id, comments, setComments }) {
 
   return comments.map((comment) => (
     <ListGroup.Item as="li" key={comment._id}>
-      <Row className="justify-content-between">
-        <Col md={8}>
-          {editingComment && editingComment._id === comment._id ? (
-            <input
-              type="text"
-              value={editingComment.comment}
-              onChange={(e) =>
-                setEditingComment({
-                  ...editingComment,
-                  comment: e.target.value,
-                })
-              }
-            />
-          ) : (
-            <>
+      {editingComment && editingComment._id === comment._id ? (
+        <EditComment />
+      ) : (
+        <>
+          <Row className="justify-content-between">
+            <Col md={8}>
               <h3>Recensione</h3>
               <p>{comment.comment}</p>
-            </>
-          )}
-        </Col>
-        <Col md={1} className="d-flex align-items-center p-2">
-          {editingComment && editingComment._id === comment._id ? (
-            <>
-              <Button
-                variant="success"
-                className="me-2"
-                onClick={handleSaveEdit}
-              >
-                Save
-              </Button>
-              <Button variant="secondary" onClick={handleCancelEdit}>
-                Cancel
-              </Button>
-            </>
-          ) : (
-            <>
+            </Col>
+            <Col md={1} className="d-flex align-items-center p-2">
               <Button
                 variant="warning"
                 className="me-2"
@@ -146,15 +121,15 @@ export default function CommentList({ id, comments, setComments }) {
               >
                 <Trash3Fill />
               </Button>
-            </>
-          )}
-        </Col>
-        <ToastContainer />
-      </Row>
-      <div>
-        <h4>Valutazione</h4>
-        <p>{comment.rate}</p>
-      </div>
+            </Col>
+            <ToastContainer />
+          </Row>
+          <div>
+            <h4>Valutazione</h4>
+            <p>{comment.rate}</p>
+          </div>
+        </>
+      )}
     </ListGroup.Item>
   ));
 }
