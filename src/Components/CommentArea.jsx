@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
-import { useState } from "react";
 
 export default function CommentArea({ id }) {
   const [comments, setComments] = useState([]);

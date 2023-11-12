@@ -9,75 +9,87 @@ export default function CommentList({ id, comments, setComments }) {
   const [loading, setLoading] = useState(true);
   const [editingComment, setEditingComment] = useState(null);
 
+  // FETCH GET
   const getComments = () => {
-    fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
-      .then((r) => r.json())
-      .then(setComments)
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
+        .then((r) => r.json())
+        .then(setComments)
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  // FETCH DELETE
   const handleDelete = (id) => {
-    fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
-      method: "DELETE",
-      headers: {
-        Authorization: Bearer,
-      },
-    })
-      .then((r) => {
-        if (r.ok) {
-          toast.success("Deleted successfully!", {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: toast.POSITION.TOP_LEFT,
-          });
-        }
+    try {
+      fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
+        method: "DELETE",
+        headers: {
+          Authorization: Bearer,
+        },
       })
-      .then(getComments)
-      .catch((e) => console.error(e));
+        .then((r) => {
+          if (r.ok) {
+            toast.success("Deleted successfully!", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          } else {
+            toast.error("Something went wrong!", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+        })
+        .then(getComments);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEditComment = (comment) => {
     setEditingComment(comment);
   };
 
+  // SALVO I DATI MODIFICATI
   const handleSaveEdit = () => {
-    // Implement the logic for updating the comment on the server
-    fetch(
-      `https://striveschool-api.herokuapp.com/api/comments/${editingComment._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: Bearer,
-        },
-        body: JSON.stringify({
-          comment: editingComment.comment,
-          // Include other fields that you want to update
-        }),
-      }
-    )
-      .then((r) => {
-        if (r.ok) {
-          toast.success("Comment updated successfully!", {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: toast.POSITION.TOP_LEFT,
-          });
+    try {
+      fetch(
+        `https://striveschool-api.herokuapp.com/api/comments/${editingComment._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: Bearer,
+          },
+          body: JSON.stringify({
+            comment: editingComment.comment,
+            // Include other fields that you want to update
+          }),
         }
-      })
-      .then(() => {
-        setEditingComment(null);
-        getComments();
-      })
-      .catch((e) => console.error(e));
+      )
+        .then((r) => {
+          if (r.ok) {
+            toast.success("Comment updated successfully!", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          } else {
+            toast.error("Something went wrong!", {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
+        })
+        .then(() => {
+          setEditingComment(null);
+          getComments();
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  // ANNULLO LA MODIFICA CON IL BOTTONE CANCEL
   const handleCancelEdit = () => {
     setEditingComment(null);
   };

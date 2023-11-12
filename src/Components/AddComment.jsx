@@ -1,28 +1,25 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
 
 export default function AddComment({ id, comments, setComments }) {
-  const [rate, setRate] = useState(false);
-  const [comment, setComment] = useState("");
-
+  const [rateValue, setRateValue] = useState(false);
+  const [description, setDescription] = useState("");
   const getComments = () => {
     fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
       .then((r) => r.json())
       .then(setComments);
   };
-  useEffect(() => {
-    getComments();
-  }, [id]);
+  const getCommentsByBook = useCallback(getComments, [getComments]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = {
-      comment,
-      rate,
+      comment: description,
+      rate: rateValue,
       elementId: id,
     };
     console.log(formData);
@@ -47,7 +44,7 @@ export default function AddComment({ id, comments, setComments }) {
         }
       })
 
-      .then(getComments)
+      .then(getCommentsByBook)
       .catch((e) => console.error(e));
   };
 
@@ -59,15 +56,15 @@ export default function AddComment({ id, comments, setComments }) {
           as="textarea"
           rows={3}
           type="text"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
       <Form.Label>Come valuteresti il libro?</Form.Label>
       <Form.Select
         aria-label="Default select example"
-        value={rate}
-        onChange={(e) => setRate(e.target.value)}
+        value={rateValue}
+        onChange={(e) => setRateValue(e.target.value)}
       >
         <option>Valutazione...</option>
         <option value="5">Eccellente</option>
