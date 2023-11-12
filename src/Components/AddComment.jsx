@@ -45,11 +45,8 @@ export default function AddComment({ id, comments, setComments }) {
             position: toast.POSITION.TOP_LEFT,
           });
         }
-        return fetch(
-          `https://striveschool-api.herokuapp.com/api/books/${id}/comments/`
-        );
       })
-      .then((r) => r.json())
+
       .then(getComments)
       .catch((e) => console.error(e));
   };
