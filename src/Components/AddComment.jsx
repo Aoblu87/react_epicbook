@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,19 +7,16 @@ import { Bearer } from "../Bearer";
 export default function AddComment({ id, comments, setComments }) {
   const [rateValue, setRateValue] = useState(false);
   const [description, setDescription] = useState("");
+
   const getComments = () => {
     fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
       .then((r) => r.json())
       .then(setComments);
   };
-<<<<<<< Updated upstream
-  const getCommentsByBook = useCallback(getComments, [getComments]);
-=======
   useEffect(() => {
     getComments();
   }, [id]);
   //Dovrei aggiungere la dipendeza [getComments], ma se uso la UseCallBack poi non riesco a visualizzare i dati al render del componente e non trovo soluzione.
->>>>>>> Stashed changes
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,7 +48,7 @@ export default function AddComment({ id, comments, setComments }) {
         }
       })
 
-      .then(getCommentsByBook)
+      .then(getComments)
       .catch((e) => console.error(e));
   };
 

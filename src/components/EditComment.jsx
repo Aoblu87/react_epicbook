@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import { Button, Col, Form, ListGroup, Row } from "react-bootstrap";
-import { PencilFill, Trash3Fill } from "react-bootstrap-icons";
+import { Button, Card, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
 
-export default function CommentList({ id, comments, setComments }) {
+export default function EditComment({ id, comments, setComments, comment }) {
   const [loading, setLoading] = useState(true);
+  const [description, setDescription] = useState(comment.comment);
+  const [rateValue, setRateValue] = useState(comment.rate);
   const [editingComment, setEditingComment] = useState(null);
+
+  const formData = {
+    comment: description,
+    rate: rateValue,
+    elementId: id,
+  };
 
   const getComments = () => {
     fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
@@ -19,7 +26,6 @@ export default function CommentList({ id, comments, setComments }) {
   };
 
   const handleSaveEdit = () => {
-    // Implement the logic for updating the comment on the server
     fetch(
       `https://striveschool-api.herokuapp.com/api/comments/${editingComment._id}`,
       {
@@ -30,7 +36,6 @@ export default function CommentList({ id, comments, setComments }) {
         },
         body: JSON.stringify({
           comment: editingComment.comment,
-          // Include other fields that you want to update
         }),
       }
     )
@@ -58,21 +63,24 @@ export default function CommentList({ id, comments, setComments }) {
 
   return (
     <Form onSubmit={handleSaveEdit}>
+      <Card.Title className="d-flex justify-content-center">
+        Lascia una recensione
+      </Card.Title>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Control
           placeholder="Romanzo avvincente..."
           as="textarea"
           rows={3}
           type="text"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
       <Form.Label>Come valuteresti il libro?</Form.Label>
       <Form.Select
         aria-label="Default select example"
-        value={rate}
-        onChange={(e) => setRate(e.target.value)}
+        value={rateValue}
+        onChange={(e) => setRateValue(e.target.value)}
       >
         <option>Valutazione...</option>
         <option value="5">Eccellente</option>
@@ -82,7 +90,7 @@ export default function CommentList({ id, comments, setComments }) {
         <option value="1">Pessimo</option>
       </Form.Select>
       <Form.Group className="d-flex justify-content-end py-4 gap-2">
-        <Button variant="success" className="me-2" onClick={handleSaveEdit}>
+        <Button variant="success" className="me-2" type="submit">
           Save
         </Button>
         <Button variant="secondary" onClick={handleCancelEdit}>
