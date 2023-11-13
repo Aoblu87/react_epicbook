@@ -56,7 +56,11 @@ export default function CommentList({ id, comments, setComments }) {
   return comments.map((comment) => (
     <ListGroup.Item as="li" key={comment._id}>
       {editingComment && editingComment._id === comment._id ? (
-        <EditComment comment={comment} />
+        <EditComment
+          id={id}
+          editingComment={comment}
+          setEditingComment={setEditingComment}
+        />
       ) : (
         <>
           <Row className="justify-content-between">

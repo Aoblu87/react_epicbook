@@ -4,57 +4,67 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
 
-export default function EditComment({ id, comments, setComments, comment }) {
+export default function EditComment({
+  id,
+  comments,
+  setComments,
+  comment,
+  editingComment,
+  setEditingComment,
+}) {
   const [loading, setLoading] = useState(true);
-  const [description, setDescription] = useState(comment.comment);
-  const [rateValue, setRateValue] = useState(comment.rate);
-  const [editingComment, setEditingComment] = useState(null);
+  const [description, setDescription] = useState(editingComment.comment);
+  const [rateValue, setRateValue] = useState(editingComment.rate);
 
-  const formData = {
-    comment: description,
-    rate: rateValue,
-    elementId: id,
-  };
-
+  // FETCH GET
   const getComments = () => {
-    fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
-      .then((r) => r.json())
-      .then(setComments)
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
+        .then((r) => r.json())
+        .then(setComments)
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleSaveEdit = () => {
-    fetch(
-      `https://striveschool-api.herokuapp.com/api/comments/${editingComment._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: Bearer,
-        },
-        body: JSON.stringify({
-          comment: editingComment.comment,
-        }),
-      }
-    )
-      .then((r) => {
-        if (r.ok) {
-          toast.success("Comment updated successfully!", {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: toast.POSITION.TOP_LEFT,
-          });
+  const handleSaveEdit = (e) => {
+    e.preventDefault();
+    setEditingComment();
+    const formData = {
+      comment: description,
+      rate: rateValue,
+      elementId: id,
+    };
+    try {
+      fetch(
+        `https://striveschool-api.herokuapp.com/api/comments/${editingComment._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: Bearer,
+          },
+          body: JSON.stringify(formData),
         }
-      })
-      .then(() => {
-        setEditingComment(null);
-        getComments();
-      })
-      .catch((e) => console.error(e));
+      )
+        .then((r) => {
+          if (r.ok) {
+            toast.success("Comment updated successfully!", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          } else {
+            toast.error("Something went wrong!", {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
+        })
+        .then(getComments);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancelEdit = () => {
