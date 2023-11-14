@@ -9,7 +9,7 @@ function AlertDismissible() {
 
   return (
     <>
-      <Row className="justify-content-center sticky-top">
+      <Row className="justify-content-center sticky-top p-5 w-md-50">
         <Alert show={show} variant="light" className="d-flex flex-column w-50">
           <Alert.Heading className="d-flex justify-content-center align-items-center my-3">
             <img

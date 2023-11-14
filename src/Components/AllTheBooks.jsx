@@ -1,6 +1,6 @@
-import { Card, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row } from "react-bootstrap";
 import dataBooks from "../assets/JSON/fantasy.json";
+import SingleBook from "../components/SingleBook/SingleBook";
 
 export default function AllTheBooks({ query }) {
   const searchResult = (book) =>
@@ -14,18 +14,5 @@ export default function AllTheBooks({ query }) {
         ))}
       </Row>
     </Container>
-  );
-}
-
-function SingleBook({ book }) {
-  return (
-    <Card key={book.asin} className="border border-0">
-      <Link to={`/BookDetails/${book.asin}`} key={book.asin}>
-        <Card.Img variant="top" src={book.img} />
-        <Card.Body className="my-2">
-          <Card.Title className="text-center my-2">{book.title}</Card.Title>
-        </Card.Body>
-      </Link>
-    </Card>
   );
 }

@@ -5,7 +5,7 @@ function MyFooter() {
   return (
     <Container>
       <Row className="my-5">
-        <Col xs={12} md={6} className="d-flex justify-content-start p-3 ">
+        <Col xs={7} md={6} className="d-flex justify-content-start p-3 ">
           <img
             src={Logo}
             width="30"
@@ -16,7 +16,7 @@ function MyFooter() {
 
           <span>2023 Company</span>
         </Col>
-        <Col xs={12} md={6} className="d-flex justify-content-end p-3 ">
+        <Col xs={4} md={6} className="d-flex justify-content-end p-3 ">
           <svg
             className="mx-2"
             xmlns="http://www.w3.org/2000/svg"
