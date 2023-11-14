@@ -7,11 +7,16 @@ import { Bearer } from "../Bearer";
 export default function AddComment({ id, comments, setComments }) {
   const [rate, setRate] = useState(false);
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const getComments = () => {
-    fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
-      .then((r) => r.json())
-      .then(setComments);
+    try {
+      fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
+        .then((r) => r.json())
+        .then(setComments);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     getComments();
@@ -26,29 +31,31 @@ export default function AddComment({ id, comments, setComments }) {
       elementId: id,
     };
     console.log(formData);
-
-    fetch("https://striveschool-api.herokuapp.com/api/comments/", {
-      headers: {
-        Authorization: Bearer,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(formData),
-    })
-      .then(function (response) {
-        if (response.ok) {
-          toast.success("Comment saved successfully!", {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: toast.POSITION.TOP_LEFT,
-          });
-        }
+    try {
+      fetch("https://striveschool-api.herokuapp.com/api/comments/", {
+        headers: {
+          Authorization: Bearer,
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(formData),
       })
+        .then(function (response) {
+          if (response.ok) {
+            toast.success("Comment saved successfully!", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          } else {
+            toast.error("Something went wrong!", {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
+        })
 
-      .then(getComments)
-      .catch((e) => console.error(e));
+        .then(getComments);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
