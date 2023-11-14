@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
 
 export default function AddComment({
   id,
-  comments,
+
   setComments,
   loading,
   setLoading,
@@ -18,7 +18,10 @@ export default function AddComment({
     try {
       fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
         .then((r) => r.json())
-        .then(setComments);
+        .then(setComments)
+        .finally(() => {
+          setLoading(true);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -57,13 +60,20 @@ export default function AddComment({
           }
         })
 
-        .then(getComments);
+        .then(getComments)
+        .finally(() => {
+          setLoading(false);
+        });
     } catch (error) {
       console.log(error);
     }
   };
 
-  return (
+  return loading ? (
+    <div className="d-flex mt-5">
+      <Spinner animation="border" variant="primary" className="mx-auto" />
+    </div>
+  ) : (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Control

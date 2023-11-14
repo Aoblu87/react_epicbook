@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
-import { Card } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
 import AddComment from "./AddComment";
-import ListaCommentiProva from "./ListaCommentiProva";
+import CommentList from "./CommentList";
 
 export default function CommentArea({ id }) {
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getCommentsByBook = useCallback(
     (id) => {
@@ -48,15 +48,16 @@ export default function CommentArea({ id }) {
           <Card.Title className="d-flex justify-content-center">
             Recensioni clienti
           </Card.Title>
-
-          <ListaCommentiProva
-            id={id}
-            comments={comments}
-            setComments={setComments}
-            loading={loading}
-            setLoading={setLoading}
-            getCommentsByBook={getCommentsByBook}
-          />
+          <ListGroup as="ol" numbered>
+            <CommentList
+              id={id}
+              comments={comments}
+              setComments={setComments}
+              loading={loading}
+              setLoading={setLoading}
+              getCommentsByBook={getCommentsByBook}
+            />
+          </ListGroup>
         </Card.Body>
       </Card>
     </>
