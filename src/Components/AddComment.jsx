@@ -4,10 +4,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
 
-export default function AddComment({ id, comments, setComments }) {
+export default function AddComment({
+  id,
+  comments,
+  setComments,
+  loading,
+  setLoading,
+}) {
   const [rate, setRate] = useState(false);
   const [comment, setComment] = useState("");
-  const [loading, setLoading] = useState(true);
 
   const getComments = () => {
     try {

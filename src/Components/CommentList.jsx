@@ -6,45 +6,66 @@ import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
 import EditComment from "./EditComment";
 
-export default function CommentList({ id, comments, setComments }) {
-  const [loading, setLoading] = useState(true);
+export default function CommentList({
+  id,
+  comments,
+  setComments,
+  loading,
+  setLoading,
+}) {
   const [editingComment, setEditingComment] = useState(null);
 
   const getComments = () => {
-    fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
-      .then((r) => r.json())
-      .then(setComments)
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      fetch(`https://striveschool-api.herokuapp.com/api/books/${id}/comments/`)
+        .then((r) => r.json())
+        .then(setComments);
+      // .finally(() => {
+      //   setLoading(false);
+      // });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDelete = (id) => {
-    fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
-      method: "DELETE",
-      headers: {
-        Authorization: Bearer,
-      },
-    })
-      .then((r) => {
-        if (r.ok) {
-          toast.success("Deleted successfully!", {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: toast.POSITION.TOP_LEFT,
-          });
-        }
+    setLoading(true);
+    try {
+      fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
+        method: "DELETE",
+        headers: {
+          Authorization: Bearer,
+        },
       })
-      .then(getComments)
-      .catch((e) => console.error(e));
+        .then((r) => {
+          if (r.ok) {
+            toast.success("Deleted successfully!", {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          } else {
+            toast.error("Something went wrong!", {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
+        })
+        .then(getComments);
+      // .finally(() => {
+      //   setLoading(false);
+      // });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEditComment = (comment) => {
     setEditingComment(comment);
   };
 
+  // return loading ? (
+  //   <div className="d-flex mt-5">
+  //     <Spinner animation="border" variant="primary" className="mx-auto" />
+  //   </div>
+  // ) : (
   return comments.map((comment) => (
     <ListGroup.Item as="li" key={comment._id}>
       <Row className="justify-content-between">
@@ -90,4 +111,5 @@ export default function CommentList({ id, comments, setComments }) {
       </Row>
     </ListGroup.Item>
   ));
+  // );
 }
