@@ -25,8 +25,8 @@ export default function BookDetails() {
 
   return (
     <Container>
-      <Row className="g-0">
-        <Card className="d-flex flex-row justify-content-center border border-0">
+      <Row className="g-0 ">
+        <Card className="d-flex flex-row flex-wrap justify-content-center border border-0">
           <Col md={4} className="d-flex mx-3">
             <Image src={book.img} className="card-img-top" alt={book.title} />
           </Col>
@@ -55,7 +55,7 @@ export default function BookDetails() {
           </Col>
         </Card>
       </Row>
-      <Row>
+      <Row className="p-2">
         <CommentArea id={book.asin} />
       </Row>
     </Container>

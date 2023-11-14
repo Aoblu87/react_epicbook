@@ -13,9 +13,6 @@ export default function AllTheBooks({ query }) {
           <SingleBook book={book} key={book.asin} />
         ))}
       </Row>
-      {/* {selectedId && (
-        <CommentArea selectedId={selectedId} bookTitle={bookTitle} />
-      )} */}
     </Container>
   );
 }

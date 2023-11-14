@@ -41,7 +41,7 @@ function MyNav({ query, setQuery }) {
           </Navbar.Collapse>
 
           <Row className="justify-content-center my-2 mx-5">
-            <Col xs={11}>
+            <Col xs={9} md={11}>
               <Form.Control
                 type="text"
                 value={query}
@@ -54,13 +54,14 @@ function MyNav({ query, setQuery }) {
               </Button>
             </Col>
           </Row>
-
-          <button
-            className="btn btn-light rounded-circle"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          >
-            {theme === "light" ? <MoonStarsFill /> : <Sun />}
-          </button>
+          <Col className="d-none d-md-flex justify-content-end">
+            <button
+              className="btn btn-light rounded-circle"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            >
+              {theme === "light" ? <MoonStarsFill /> : <Sun />}
+            </button>
+          </Col>
         </Container>
       </Navbar>
     </>
