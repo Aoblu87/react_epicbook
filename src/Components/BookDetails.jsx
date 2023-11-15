@@ -12,6 +12,7 @@ import {
 import { useParams } from "react-router-dom";
 import dataBooks from "../assets/JSON/fantasy.json";
 import CommentArea from "./CommentArea";
+import PageNotFound from "./PageNotFound/PageNotFound";
 
 export default function BookDetails() {
   const { id } = useParams();
@@ -19,11 +20,13 @@ export default function BookDetails() {
 
   const book = dataBooks.find((book) => book.asin === id);
 
-  if (!book) {
-    return <div>Product not found</div>;
-  }
+  // if (!book) {
+  //   return <div>Product not found</div>;
+  // }
 
-  return (
+  return !book ? (
+    <PageNotFound />
+  ) : (
     <Container>
       <Row className="g-0 ">
         <Card className="d-flex flex-row flex-wrap justify-content-center border border-0">
