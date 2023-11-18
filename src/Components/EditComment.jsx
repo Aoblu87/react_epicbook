@@ -1,36 +1,44 @@
-import { useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { useCallback, useEffect, useState } from "react";
+import { Button, Card, Form, Spinner } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bearer } from "../Bearer";
 
 export default function EditComment({
   id,
-  comments,
+
   setComments,
   comment,
-  editingComment,
+
   setEditingComment,
+  loading,
+  setLoading,
 }) {
   const [rateValue, setRateValue] = useState(false);
   const [description, setDescription] = useState("");
-  //   const [loading, setLoading] = useState(true);
 
-  const getComments = () => {
+  const getComments = useCallback(() => {
     try {
       fetch(
         `https://striveschool-api.herokuapp.com/api/books/${comment.elementId}/comments/`
       )
         .then((r) => r.json())
-        .then(setComments);
+        .then(setComments)
+        .finally(() => {
+          setLoading(false);
+        });
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [setComments, comment.elementId, setLoading]);
+
+  useEffect(() => {
+    getComments();
+  }, [getComments, setComments]);
 
   const handleSaveEdit = (e) => {
     e.preventDefault();
-    // setLoading(true);
+    setLoading(true);
     const formData = {
       comment: description,
       rate: rateValue,
@@ -62,10 +70,10 @@ export default function EditComment({
         .then(() => {
           setEditingComment(null);
           getComments();
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      // .finally(() => {
-      //   setLoading(false);
-      // });
     } catch (error) {
       console.error(error);
     }
@@ -75,13 +83,11 @@ export default function EditComment({
     setEditingComment(null);
   };
 
-  return (
-    //loading ? (
-    //     <div className="d-flex mt-5">
-    //       <Spinner animation="border" variant="primary" className="mx-auto" />
-    //     </div>
-    //   ) : (
-    //     <>
+  return loading ? (
+    <div className="d-flex mt-5">
+      <Spinner animation="border" variant="primary" className="mx-auto" />
+    </div>
+  ) : (
     <Form onSubmit={handleSaveEdit}>
       <Card.Title className="d-flex justify-content-center">
         Lascia una recensione
@@ -120,6 +126,4 @@ export default function EditComment({
       </Form.Group>
     </Form>
   );
-  //     </>
-  //   );
 }

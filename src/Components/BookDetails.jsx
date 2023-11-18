@@ -20,10 +20,6 @@ export default function BookDetails() {
 
   const book = dataBooks.find((book) => book.asin === id);
 
-  // if (!book) {
-  //   return <div>Product not found</div>;
-  // }
-
   return !book ? (
     <PageNotFound />
   ) : (
